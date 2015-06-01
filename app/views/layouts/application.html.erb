@@ -5,10 +5,88 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+
 </head>
 <body>
+  <% if !current_user %>
+    <span id="create-account"></span>
+  <% end %>
+  <div class="collapse navbar-collapse">
+    <% if logged_in? %>
+      <% if parent_mode? %>
+        <%= link_to "Logout", '/logout', method: :delete, class: "logout" %>
+        <a href="#loginmodal" class="flatbtn2" id="normaltrigger">Exit Parent Mode</a>
+      <% else %>
+        <a href="#loginmodal" class="flatbtn" id="parenttrigger">Enter Parent Mode</a>
+      <% end %>
+    <% else %>
+      <div id='form-login'>
+        <%= form_tag "/login", method: "post" do %>
+        <%= label_tag :email %>:
+        <%= text_field_tag :email %>
+        <%= label_tag :password %>:
+        <%= password_field_tag :password %>
+        <%= submit_tag "sign in", :class => 'btn btn-default' %>
+        <%= link_to "Signup",  new_family_path %>
+        <% end %>
+      </div>
+    <% end %>
 
-<%= yield %>
 
+  <a href="#chore-box" class="chore-window">New Chore</a>
+    <div id="chore-box" class="chore-popup">
+    <a href="#" class="close"><img src="/assets/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
+    <form method="post" class="signin" action="tasks">
+      <%= token_tag(nil) %>
+      <fieldset class="textbox">
+        <label class="username">
+        <span>New Chore</span>
+        <input id="title" name="title" type="text" autocomplete="on" placeholder="Chore">
+        </label>
+        <label class="points">
+        <span>Point Value</span>
+        <input id="points" name="points" type="text" autocomplete="on" placeholder="Point Value">
+        </label>
+        <label class="deadline">
+        <span>Deadline</span>
+        <input id="deadline" name="deadline" type="date" autocomplete="on" placeholder="Deadline" value='2015-05-31'>
+        </label>
+        <label class="assign">
+          <span>Assign to:</span>
+          <select id="child-options" name="name">
+            <option> </option>
+
+            </select>
+            <br><br>
+        </label>
+        <input type='submit' class='submitchore' name="Assign_Chore">
+      </fieldset>
+  </form>
+</div>
+<div id="loginmodal" style="display:none;">
+   <h1>Parent Login</h1>
+   <form id="loginform" name="loginform" method="post" action="sessions/admin">
+     <%= token_tag(nil) %>
+     <label for="password">Password:</label>
+     <input type="password" name="password" id="password" class="txtfield" tabindex="2">
+     <div class="center"><input type="submit" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="Log In" tabindex="3"></div>
+   </form>
+ </div>
+<div>
+  <%= yield %>
+</div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+

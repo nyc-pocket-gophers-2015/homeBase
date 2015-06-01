@@ -1,10 +1,26 @@
 Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
-
+  resources :tasks, :events, :rewards, :families, :members
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  root 'tasks#index'
+  post   'login'   => 'sessions#create'
+  delete 'logout'  => 'sessions#destroy'
 
+  post "sessions/admin" => "sessions#admin"
+  get "sessions/normal" => "sessions#normal_mode"
+
+  post 'members/give_reward' => 'members#give_reward'
+  post 'members/deny_reward' => 'members#deny_reward'
+
+  post 'members/add_points' => 'members#add_points'
+  post 'members/remove_points' => 'members#remove_points'
+
+  post 'tasks/kid_complete' => 'tasks#kid_complete'
+  post 'tasks/parent_complete' => 'tasks#parent_complete'
+  post 'tasks/parent_delete' => 'tasks#parent_delete'
+  post 'tasks/parent_redo' => 'tasks#parent_redo'
+  post 'tasks/delete_task' => 'tasks#delete_task'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

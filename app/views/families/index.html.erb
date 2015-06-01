@@ -1,0 +1,34 @@
+<head>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.js'></script>
+  <script scr='javascripts/getFamilies.js'></script>
+</head>
+
+<body>
+  <div class="familyname-container"></div>
+    <button class="Llink">
+      <a href="/rewards">To Rewards</a>
+    </button>
+  <div class="clear"></div>
+  <div class="members-medals-container"></div>
+</body>
+
+
+<script id="familyname-template" type="text/x-handlebars-template">
+  <h1>The {{familyName}} Family</h1>
+</script>
+
+
+<script id="memberMedal-template" type="text/x-handlebars-template">
+  <h2 class="memberMain">{{role}}      {{name}}      
+    <span class="points">{{task_points}}</span>
+  </h2>
+    {{#badges}}
+  <h3 class="memberBadge"> * {{name}} *</h3>
+    {{/badges}}
+    {{#pendingRewards}}
+  <div style="text-align:center">
+    <div class="pendingReward">  - {{name}} -  </div>
+  </div> 
+  {{/pendingRewards}}
+</script>
+

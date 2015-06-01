@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<head>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.js'></script>
+</head>
+
+<body>
+
+<a href="#login-box" class="login-window">Add Member</a>
+<h1 class="welcome"><span id="date"></span></h1><h2 id='weather'></h2>
+<div class="clear"></div>
+<button class="rlink"><a href="/rewards">Rewards ></a></button>
+<div class="people-container">
+
+
+</div>
+
+
+
+
+<div class="unassigned-container">
+<h4>Unassigned Tasks</h4>
+<table id="unassigned"></table>
+
+</div>
+<div id="login-box" class="login-popup">
+  <form method="post" class="create-member" action="/members">
+    <%= token_tag(nil) %>
+    <label> <span>Role in family</span>
+      <input name="member[role]" type="text" placeholder="Role">
+    </label>
+    <label> <span>Name</span>
+      <input name="member[name]" type="text" placeholder="Name">
+    </label>
+    <input class="button" type="submit" value="submit" />
+  </form>
+</div>
+
+</body>
+	<script id="person-template" type="text/x-handlebars-template">
+	<div class="kid-container">
+	<p class="kid-name"><%= image_tag "kendall.png" %> {{name}} </p>
+	<div class="clear"></div>
+	<table class="tasks-container">
+	<tr class='button-container'>
+		{{#assignedTasks}}
+	<td class="task-d">
+    <form class = "chore-form">
+      <input type="hidden" name="task_id" value="{{task_id}}">
+      <input type="hidden" name="member_id" value="{{id}}">
+      <input type="submit" class= "{{isComplete}}" value="{{title}}" />
+    </form>
+  </td>
+  <td class="point-d"><button class="point_value">{{point_value}}</button></td>
+    <% if session[:admin] == true %>
+    <td class="icons">
+    <form class="approve-chore">
+      <input type="hidden" name="task_id" value="{{task_id}}">
+      <input type="image" src="<%= image_path('icons/greencheck.png') %>">
+    </form>
+  </td>
+  <td class="icons">
+    <form class="reject-chore" action='/tasks' method='post'>
+      <input type="hidden" name="task_id" value="{{task_id}}" action='delete'>
+      <input type="image" src="<%= image_path('icons/redx.png') %>">
+    </form>
+  </td>
+  <td class="icons">
+    <form class="redo-chore">
+    <input type="hidden" name="task_id" value="{{task_id}}">
+  <input type="image" src="<%= image_path('icons/redo.png') %>">
+  </form>
+  </td>
+  <% end %>
+  </tr>
+		{{/assignedTasks}}
+		</table>
+		</div>
+    <div class="space"></div>
+		</script>
+
+
+		<script id="task-template" type="text/x-handlebars-template">
+  	<tr class='button-container'>
+    	<td class="task-d"><button type='button' class="title" name="{{id}}">{{title}}</button></td>
+      <td class="point-d"><button class="point_value">{{point_value}}</button></td>
+
+        <td class="icons">
+        <%= image_tag "icons/greencheck.png" %>
+        <form id="red-x"><%= image_tag "icons/redx.png" %></form>
+        <%= image_tag "icons/redo.png" %>
+        </td>
+
+    </tr>
+		</script>
+
+  <script id="child-chore" type="text/x-handlebars-template">
+    <option value="{{id}}">{{name}}</option>
+  </script>
+
+<script>
+$(document).ready(function(){
+	var date = new Date()
+	$('#date').text(date.toDateString());
+  getPeople();
+  getUnassigned();
+  $(document).on('submit','.chore-form', updateChore);
+  $(document).on('submit', '.reject-chore', deleteChore);
+});
+
+var deleteChore = function(e){
+  console.log($(e.target))
+  e.preventDefault();
+  $.ajax({
+    url: 'tasks/delete_task',
+    type: 'post',
+    data: $(e.target).serialize()
+  }).done(function(response){
+    console.log(response)
+    location.reload(false)
+  }).fail(function(error){
+    console.log(error)
+  })
+};
+
+var updateChore = function(e){
+  e.preventDefault();
+  $.ajax({
+    url: "tasks/kid_complete",
+    type: 'post',
+    data: $(e.target).serialize()
+  }).done(function(response){
+    console.log(response)
+  }).fail(function(error){
+    console.log(error)
+  })
+};
+
+var getPeople = function(){
+  $.ajax({
+    url: "http://localhost:3000/families.json",
+    type: 'get',
+    dataType: 'json'
+  }).done(function(response){
+    console.log(response);
+    var template = $('#person-template').html();
+    var dropdown = $('#child-chore').html()
+    response.members.forEach(function(member){
+    	var renderPeople = Mustache.render(template, member);
+      var renderChildChores = Mustache.render(dropdown, member)
+    	$('.people-container').append(renderPeople);
+      $('#child-options').append(renderChildChores);
+    });
+  });
+};
+
+
+var getUnassigned = function(){
+  $.ajax({
+    url: "http://localhost:3000/families.json",
+    type: 'get',
+    dataType: 'json'
+  }).done(function(response){
+    var taskTemplate = $('#task-template').html();
+    response.unassignedTasks.forEach(function(task){
+    	var renderUnassigned = Mustache.render(taskTemplate, task);
+    	$('#unassigned').append(renderUnassigned);
+    })
+    });
+};
+
+
+</script>
+
+
+

@@ -1,0 +1,17 @@
+<%= form_for @new_family do |f| %>
+  <div>
+    <%= f.label :surname, "Surname" %>
+    <%= f.text_field :surname %>
+  </div>
+  <div>
+    <%= f.label :email, "Email" %>
+    <%= f.text_field :email %>
+  </div>
+  <div>
+    <%= f.label :password, "Password" %>
+    <%= f.text_field :password %>
+  </div>
+  <div>
+    <%= f.submit "Create Family" %>
+  </div>
+<% end %>
