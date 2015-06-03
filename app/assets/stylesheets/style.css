@@ -1,0 +1,210 @@
+
+body {
+  background: #f0f0f0;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #313131;
+  font-size: 62.5%;
+  line-height: 1;
+  padding: 10px;
+
+}
+
+.tasks-container {
+	text-align:left;
+	list-style-type: none;
+	padding-left:42px;
+
+}
+
+li {
+	list-style-type:none;
+}
+
+.welcome {
+	float:left;
+	text-align:center;
+}
+
+.kid-container{
+border: 1px solid #2c3e50;
+border-radius: 20px;
+width: 35vw;
+margin: 0 auto;
+padding-bottom: 20px;
+padding-left:5px;
+padding-top: 5px;
+}
+
+.kid-name{
+	text-decoration: underline;
+	font-size: 30px;
+	color: #34495e;
+
+}
+
+p img {
+  border-radius:20px;
+	width:92px;
+	margin-right:20px;
+   vertical-align: text-bottom;
+}
+
+.clear {
+	clear: both;
+}
+
+
+.point_value{
+
+	display: inline-block;
+	font-size: 24px;
+}
+
+.reward-intro{
+	text-align:center;
+}
+
+.rewards-container {
+	margin: 0 auto;
+	text-align:left;
+	list-style-type: none;
+
+}
+
+.cost {
+	display: inline-block;
+	font-size: 24px;
+
+	color:#34495e;
+}
+
+.name {
+ 	display:inline-block;
+ 	color: #34495e;
+ 	border: 2px solid #34495e;
+	font-family: Helvetica;
+	font-size: 24px;
+	margin-top:5px;
+	margin-bottom:5px;
+	background-color: #f1c40f;
+	border-radius: 10px;
+	margin-right:20px;
+}
+
+.t-cat{
+
+	display: inline-block;
+	font-size: 24px;
+
+	color:#34495e;
+
+}
+
+.space{
+	margin-bottom: 35px;
+}
+
+.unassigned-container{
+	width: 80vw;
+	margin: 0 auto;
+	border-radius: 10px;
+	border: 1px solid black;
+	padding:5px;
+}
+
+.unassigned {
+	text-align:left;
+	list-style-type: none;
+
+}
+
+.memberMain{
+  text-align: center;
+  font-size: 30px;
+}
+
+.memberBadge{
+  text-align: center;
+  font-size: 24px;
+  color: #d35400;
+}
+
+.points {
+  color:#2980b9;
+}
+
+.pendingReward{
+  display:inline-block;
+  text-align:center;
+  color: #ecf0f1;
+  border: 2px solid #34495e;
+  font-family: Helvetica;
+  font-size: 24px;
+  margin-top:5px;
+  margin-bottom:5px;
+  background-color: #e74c3c;
+  border-radius: 10px;
+  margin-right:20px;
+
+}
+
+.rewardMember{
+	font-size:24px;
+	margin: 10px;
+}
+
+.reward-box{
+	padding: 5px;
+	border: 1px solid black;
+	border-radius:10px;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+
+.rlink{
+	float:right;
+}
+
+.Llink{
+	float:left;
+}
+
+.true {
+    border-color: #000;
+    border-width: 1px;
+    border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    color: #333;
+    cursor: pointer;
+    display: inline-block;
+    padding: 6px 6px 4px;
+    margin-top: 10px;
+    font: 12px;
+    width: auto;
+		background-color:#2980b9;
+		color:#f39c12;
+}
+
+.add-member{
+	margin-top: 20px;
+	text-decoration: none;
+	text-align:center;
+}
+
+.add-member a{
+	text-decoration: none;
+}
+
+.chore-window{
+	text-decoration: none;
+	text-align: center;
+}
+
+.chore-button{
+	float:left;
+}
+
+.style_image {
+	height: 50px
+}

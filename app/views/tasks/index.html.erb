@@ -1,0 +1,111 @@
+
+<body>
+
+
+<h1 class="welcome"><span id="date"></span></h1><h2 id='weather'></h2>
+
+<div class="clear"></div>
+<button class="chore-button"><a href="#chore-box" class="chore-window">New Chore</a></button>
+<button class="rlink"><a href="/rewards" onclick="getRewards()">Rewards></a></button>
+
+
+    <div id="chore-box" class="modal">
+    <a href="#" class="close"><img src="/assets/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
+    <form method="post" class="chore-form" action="tasks">
+      <%= token_tag(nil) %>
+      <fieldset class="textbox">
+        <label for="title">New Chore</label>
+        <input id="title" name="title" type="text" placeholder="Chore" class="txtfield">
+
+        <label for="points">Point Value</label>
+        <input id="points" name="points" type="text" placeholder="Point Value" class="txtfield">
+        <label for="name">Assign to:</label>
+          <select id="child-options" name="name">
+            <option> </option>
+
+            </select>
+            <br><br>
+
+        <input type='submit' class='submitchore' name="Assign_Chore">
+      </fieldset>
+  </form>
+</div>
+<div>
+  <%= yield %>
+</div>
+<div class="people-container"></div>
+<div class="unassigned-container">
+<h4>Unassigned Tasks</h4>
+<table id="unassigned"></table>
+
+</div>
+
+</body>
+	<script id="person-template" type="text/x-handlebars-template">
+	<div class="kid-container">
+	<p class="kid-name"><img src='{{imgUrl}}'>{{name}} </p>
+	<div class="clear"></div>
+	<table class="tasks-container">
+	<tr class='button-container'>
+		{{#assignedTasks}}
+	<td class="task-d">
+    <form class = "chore-form">
+      <input type="hidden" name="task_id" value="{{task_id}}">
+      <input type="hidden" name="member_id" value="{{id}}">
+      <input type="submit" class= "{{isComplete}}" value="{{title}}" />
+    </form>
+  </td>
+  <td class="point-d"><button class="point_value">{{point_value}}</button></td>
+    <% if session[:admin] == true %>
+    <td class="icons">
+    <form class="approve-chore">
+      <input type="hidden" name="task_id" value="{{task_id}}">
+      <input type="image" src="<%= image_path('icons/greencheck.png') %>">
+    </form>
+  </td>
+  <td class="icons">
+    <form class="reject-chore" action='/tasks' method='post'>
+      <input type="hidden" name="task_id" value="{{task_id}}" action='delete'>
+      <input type="image" src="<%= image_path('icons/redx.png') %>">
+    </form>
+  </td>
+  <td class="icons">
+    <form class="redo-chore">
+    <input type="hidden" name="task_id" value="{{task_id}}">
+  <input type="image" src="<%= image_path('icons/redo.png') %>">
+  </form>
+  </td>
+  <% end %>
+  </tr>
+		{{/assignedTasks}}
+		</table>
+		</div>
+    <div class="space"></div>
+		</script>
+  <script id="child-chore" type="text/x-handlebars-template">
+    <option value="{{id}}">{{name}}</option>
+  </script>
+
+		<script id="task-template" type="text/x-handlebars-template">
+  	<div class='button-container'>
+    <form class="unassigned-task">
+    	<span class="task-d"><input type="submit" value="{{title}}" class="title" ></span>
+      <span class="point-d">{{point_value}}</span>
+      <span>
+      <input type="hidden" name="task_id" value="{{id}}">
+      <span>Assign to:</span>
+      <select name="member_id" class="unassigned-dropdown">
+      </select>
+      </span>
+    </form>
+    </div>
+		</script>
+
+  <script id="unassigned-option" type="text/x-handlebars-template">
+    <option value="{{id}}">{{name}}</option>
+  </script>
+
+
+
+
+

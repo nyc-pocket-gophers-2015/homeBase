@@ -1,0 +1,125 @@
+<head>
+<head>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.css' />
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.js'></script>
+
+</head>
+</head>
+
+<body>
+
+<div id="new-member-box" class="modal">
+<h1>New Family Member</h1>
+  <form method="post" class="create-member" action="/members">
+    <%= token_tag(nil) %>
+    <label for="member[name">Name:</label>
+    <input name="member[name]" type="text" placeholder="Name" class="txtfield" tabindex="2">
+    <input type="radio" name="member[img_url]" value="<%= asset_path 'boy1.jpg' %>"><%= image_tag 'avatars/boy1.jpg', class: 'style_image' %>
+    <input type="radio" name="member[img_url]" value="<%= asset_path 'boy2.jpg' %>"><%= image_tag 'avatars/boy2.jpg', class: 'style_image' %>
+    <input type="radio" name="member[img_url]" value="<%= asset_path 'boy3.jpg' %>"><%= image_tag 'avatars/boy3.jpg', class: 'style_image'  %>
+    <input type="radio" name="member[img_url]" value="<%= asset_path 'boy5.jpg' %>"><%= image_tag 'avatars/boy5.jpg', class: 'style_image'  %>
+    <input type="radio" name="member[img_url]" value="<%= asset_path 'girl1.jpg' %>"><%= image_tag 'avatars/girl1.jpg', class: 'style_image'  %>
+    <input type="radio" name="member[img_url]" value="<%= asset_path 'girl2.jpg' %>"><%= image_tag 'avatars/girl2.jpg', class: 'style_image'  %>
+    <input type="radio" name="member[img_url]" value="<%= asset_path 'girl3.jpg' %>"><%= image_tag 'avatars/girl3.jpg', class: 'style_image'  %>
+    <input type="radio" name="member[img_url]" value="<%= asset_path 'girl4.jpg' %>"><%= image_tag 'avatars/girl4.jpg', class: 'style_image'  %>
+    <input type="radio" name="member[img_url]" value="<%= asset_path 'baby.jpg' %>"><%= image_tag 'avatars/baby.jpg', class: 'style_image'  %>
+    <input type="radio" name="member[img_url]" value="<%= asset_path 'grandpa.jpg' %>"><%= image_tag 'avatars/grandpa.jpg', class: 'style_image' %>
+    <div class="center">
+      <input type="submit" id="loginbtn" class="flatbtn-blu hidemodal" value="Submit" tabindex="3">
+    </div>
+    </form>
+</div>
+
+  <div class="familyname-container"></div>
+    <button class="Llink">
+      <a href="/rewards">To Rewards</a>
+    </button>
+    <button class="rlink">
+      <a href="/events">To Events</a>
+    </button>
+  <div class="clear"></div>
+  <div class="members-medals-container"></div>
+  <% if parent_mode? %>
+  <p class="add-member"><button class="add"><a href="#new-member-box" class="login-window">Add Family Member</a></button></p>
+  <% end %>
+</body>
+
+
+<script id="familyname-template" type="text/x-handlebars-template">
+  <h1>The {{familyName}} Family</h1>
+</script>
+
+<script id="child-points" type="text/x-handlebars-template">
+  <option value={{id}}>{{name}}</option>
+</script>
+
+<script id="memberMedal-template" type="text/x-handlebars-template">
+  <h2 class="memberMain">{{name}}
+    <span class="points">{{task_points}}</span>
+  </h2>
+    {{#pendingRewards}}
+  <div style="text-align:center">
+  <% if parent_mode? %>
+  <form class='giveanewreward'>
+    <input type='hidden' name='reward_id' value='{{id}}'>
+    <input type='image' style='height: 25px' src='/assets/greencheck.png'>
+  </form>
+  <% end %>
+    <div class="pendingReward">  - {{name}} -  </div>
+  <% if parent_mode? %>
+  <form class='denyanewreward'>
+    <input type='hidden' name='reward_id' value='{{id}}'>
+    <input type='image' style='height: 25px' src='/assets/redx.png'>
+  </form>
+  <% end %>
+  </div>
+  {{/pendingRewards}}
+</script>
+
+
+<% if parent_mode? %>
+  <a href="#points-box" id='addpointsbtn' class="points-window">Add Points</a>
+    <div id="points-box" class="points-popup">
+    <a href="#" class="close"><img src="/assets/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
+    <form method="post" class="addpoints" action="members/add_points">
+      <%= token_tag(nil) %>
+      <fieldset class="textbox">
+        <label class="username">
+        <span>Points to Add</span>
+        <input id="addpoints" name="points" type="number" autocomplete="on" placeholder="+ points">
+        </label>
+        <label class="assign">
+          <span>Give to:</span>
+          <select class="child-points" name="name">
+            <option> </option>
+            </select>
+            <br><br>
+        </label>
+        <input type='submit' class='submitchore' name="Assign_Chore">
+      </fieldset>
+  </form>
+  </div>
+  <a href="#rmpoints-box" id='removepointsbtn' class="rmpoints-window">Remove Points</a>
+    <div id="rmpoints-box" class="rmpoints-popup">
+    <a href="#" class="close"><img src="/assets/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
+    <form method="post" class="rmpoints" action="members/remove_points">
+      <%= token_tag(nil) %>
+      <fieldset class="textbox">
+        <label class="username">
+        <span>Points to Add</span>
+        <input id="rmpoints" name="points" type="number" autocomplete="on" placeholder="- points">
+        </label>
+        <label class="assign">
+          <span>Give to:</span>
+          <select class="child-points" name="name">
+            <option> </option>
+            </select>
+            <br><br>
+        </label>
+        <input type='submit' class='submitchore' name="Assign_Chore">
+      </fieldset>
+  </form>
+  </div>
+<% end %>
