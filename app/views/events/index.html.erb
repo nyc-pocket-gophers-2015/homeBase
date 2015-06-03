@@ -1,0 +1,36 @@
+<head>
+<!--   <link rel='stylesheet' href='../../lib/assets/jquery-ui-1.11.4.custom/jquery-ui.theme.css' /> -->
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.css' />
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.js'></script>
+
+</head>
+
+<body>
+<button class="Llink">
+  <a href="/families">To Bank</a>
+</button>
+    <br><br><br>
+<div id="calendar" style="width: 300px"></div>
+
+
+<form method="post" class="create-event" action="/events">
+  <%= token_tag(nil) %>
+  <input name="event[title]" type='text'>
+  <input name="event[start_time]" type="date" id="datepicker">
+  <input name="event[end_time]" type="date" id="datepicker2">
+  <label class="assign">
+      <span>Event for:</span>
+      <select class="child-points" name="event[member_id]">
+          <option> </option>
+        </select>
+        <br><br>
+  </label>
+  <input type="submit" value='Submit'>
+</form>
+</body>
+
+<script id="child-points" type="text/x-handlebars-template">
+  <option value={{id}}>{{name}}</option>
+</script>

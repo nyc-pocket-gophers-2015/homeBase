@@ -1,0 +1,90 @@
+
+<body>
+  <a href="#new-reward" class="new-reward-link">Add Reward</a>
+<div class="reward-intro">
+<h1>Fabulous Rewards!</h1>
+<button class="rlink"><a href="/families">Family ></a></button>
+<button class="Llink"><a href="/tasks">To Tasks</a></button>
+
+</div>
+<table class="rewards-container"></table>
+</div>
+
+<div class="space"></div>
+
+<div id="new-reward" class="modal">
+  <h1>New Reward</h1>
+  <form method="post" class="create-reward" action="/rewards">
+    <%= token_tag(nil) %>
+
+    <label for="reard[name]">Reward Description</label>
+      <input name="reward[name]" type="text" placeholder="Description" class="txtfield">
+
+    <label for="reward[cost]"> Cost </label>
+      <input name="reward[cost]" type="text" placeholder="Cost" class="txtfield">
+
+    <label for="reward[member_id]">Assign to:</label>
+      <select class="child-options" name="reward[member_id]" class="txtfield">
+
+      </select>
+    <input class="flatbtn-blu" type="submit" value="submit" />
+  </form>
+</div>
+</body>
+
+
+
+<script id="reward-template" type="text/x-handlebars-template">
+<div class="reward-box">
+<h4 class="rewardMember">{{name}}<span style="color:#3498db">{{task_points}}</span></h4>
+  {{#rewards}}
+  <tr class='button-container'>
+  	<td class="reward-d">
+    <form class='buyreward'>
+      <input type='hidden' name='reward_id' value='{{reward_id}}'>
+      <input type='submit' value='{{name}}' class='name'>
+    </form>
+    </td>
+    <td class="cost-d">
+      <button class="cost">{{cost}}</button>
+    </td>
+  </tr>
+  {{/rewards}}
+  </div>
+</script>
+
+<script id="child-reward" type="text/x-handlebars-template">
+  <option value="{{id}}">{{name}}</option>
+</script>
+
+<script>
+var buyReward = function(e){
+  e.preventDefault();
+  $.ajax({
+    url: 'rewards/buy_reward',
+    method: 'post',
+    data: $(e.target).serialize()
+  }).done(function(response){
+    getRewards()
+  }).fail(function(response){
+    console.log(response)
+  })
+};
+
+// var approveReward = function(e){
+//   e.preventDefault();
+//   $.ajax({
+//     url: '/members/give_reward',
+//     method: 'post',
+//     data: $(e.target).serialize()
+//   }).done(function(response){
+//     console.log(response)
+//     console.log('FISHIN')
+//   })
+// }
+
+$(document).on('submit', '.buyreward', buyReward);
+// $(document).on('submit', '.giveanewreward', approveReward)
+
+</script>
+
