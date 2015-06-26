@@ -39,18 +39,18 @@
   <p class="add-member"><button href="#new-member-box" class="add login-window button button-balanced">Add Family Member</button></p>
 <% end %>
 <% if parent_mode? %>
-  <a href="#points-box" id='addpointsbtn' class="points-window">Add Points</a>
+  <a href="#points-box" id='addpointsbtn' class="points-window">Add baseBucks</a>
     <div id="points-box" class="points-popup">
     <a href="#" class="close"><img src="/assets/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
     <form method="post" class="addpoints" action="members/add_points">
       <%= token_tag(nil) %>
       <fieldset class="textbox">
         <label class="username">
-        <span>Points to Add</span>
+        <span># of baseBucks</span>
         <input id="addpoints" name="points" type="number" autocomplete="on" placeholder="+ points">
         </label>
         <label class="assign">
-          <span>Give to:</span>
+          <span>Give baseBucks to:</span>
           <select class="child-points" name="name">
             <option> </option>
             </select>
@@ -60,18 +60,18 @@
       </fieldset>
   </form>
   </div>
-  <a href="#rmpoints-box" id='removepointsbtn' class="rmpoints-window">Remove Points</a>
+  <a href="#rmpoints-box" id='removepointsbtn' class="rmpoints-window">Remove baseBucks</a>
     <div id="rmpoints-box" class="rmpoints-popup">
     <a href="#" class="close"><img src="/assets/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
     <form method="post" class="rmpoints" action="members/remove_points">
       <%= token_tag(nil) %>
       <fieldset class="textbox">
         <label class="username">
-        <span>Points to Remove</span>
+        <span>baseBucks to Remove</span>
         <input id="rmpoints" name="points" type="number" autocomplete="on" placeholder="- points">
         </label>
         <label class="assign">
-          <span>Give to:</span>
+          <span>Subtract baseBucks from:</span>
           <select class="child-points" name="name">
             <option> </option>
             </select>

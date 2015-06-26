@@ -10,7 +10,6 @@ json.members @family do |member|
     	json.reward_id reward.id
       json.name reward.name
       json.cost reward.cost
-      json.category reward.category
     end
   end
 end

@@ -49,17 +49,15 @@ class MembersController < ApplicationController
 	end
 
 	def add_points
-		points = params[:points].to_i
 		member = Member.find_by(id: params[:name].to_i)
-		member.task_points += points
+		member.task_points += params[:points].to_i
 		member.save
 		render json: member
 	end
 
 	def remove_points
-		points = params[:points].to_i
 		member = Member.find_by(id: params[:name].to_i)
-		member.task_points -= points
+		member.task_points -= params[:points].to_i
 		member.save
 		render json: member
 	end
