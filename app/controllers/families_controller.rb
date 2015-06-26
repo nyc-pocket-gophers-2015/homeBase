@@ -13,7 +13,11 @@ class FamiliesController < ApplicationController
       session[:admin] = true
       flash[:message] = "Congratulations on signing up"
     else
-      flash[:danger] = "Please enter valid information."
+      if params["family"]["password"].length < 6
+        flash[:danger] = "Password must be at least 6 characters."
+      else
+        flash[:danger] = "Please enter valid information."
+      end
     end
     redirect_to :root
   end
@@ -21,7 +25,7 @@ class FamiliesController < ApplicationController
   def destroy
   	family = Family.find_by(id: current_user.id)
   	if family.destroy
-  		flash[:success] = "Your ENTIRE account has been deleted"
+  		flash[:success] = "Your account has been deleted"
   	end
   end
 

@@ -13,7 +13,11 @@ class SessionsController < ApplicationController
       log_in user
       redirect_to :root
     else
-      flash.now[:danger] = "Invalid email or password"
+      if params[:password].length < 6
+        flash.now[:danger] = "Password must be at least 6 characters."
+      else
+        flash.now[:danger] = "Invalid email or password"
+      end
       render action: "new"
     end
   end

@@ -35,6 +35,9 @@ var createReward = function(e) {
     data: $(e.target).serialize()
   }).done(function(response) {
     getRewards();
+  }).error(function(response){
+    alert("We're sorry something went wrong. You're reward was not created.")
+    console.log(response)
   })
 };
 
